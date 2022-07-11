@@ -5,8 +5,8 @@ var cacheManager = require('cache-manager');
 var memoryCache = cacheManager.caching({ store: 'memory', max: 10000, ttl: 60 * 60 * 3 });
 var Pornsearch = require('./collector');
 const app = express()
-const port = 3000
-app.use(express.static('static'))
+const port = 5000
+app.use('/public',express.static(__dirname +'/static'))
 app.engine('.html', require('ejs').__express);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
@@ -41,3 +41,5 @@ app.get('/detail.html', (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+module.exports = app;
