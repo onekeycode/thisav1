@@ -20,6 +20,7 @@ async function getKeywords() {
     let keywords = data.split(',');
     return keywords;
   } catch (ex) {
+    console.error(ex)
     return [];
   };
 }
