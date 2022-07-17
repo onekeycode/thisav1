@@ -13,13 +13,15 @@ app.set('view engine', 'html');
 const fs = require('fs');
 const util = require('util')
 async function getKeywords() {
-  const filename = './keywords.txt';
+  const filename =`${__dirname}/keywords.json`;
+  console.log(filename)
   const readFile = util.promisify(fs.readFile);
   try {
     let data = await readFile(filename, 'utf8')
-    let keywords = data.split(',');
+    let keywords = JSON.parse(data);
     return keywords;
   } catch (ex) {
+    console.error(ex)
     return [];
   };
 }
