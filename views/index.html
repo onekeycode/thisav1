@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example that shows off a responsive pricing table.">
+    <title>嗖嗖看</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.1.0/build/pure-min.css"
+        integrity="sha384-yHIFVG6ClnONEA5yB5DJXfW2/KC173DIQrYoZMEtBvGzmf0PKiGyNEqe9N6BNDBH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@2.1.0/build/grids-responsive-min.css">
+    <link rel="stylesheet" href="/public/css/index.css">
+</head>
+
+<body>
+
+    <div class="pure-menu pure-menu-horizontal">
+        <a href="#" class="pure-menu-heading">嗖嗖看</a>
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item"><a href="#" class="pure-menu-link">首页</a></li>
+            <li class="pure-menu-item pure-menu-selected"><a href="#" class="pure-menu-link">列表</a></li>
+            <li class="pure-menu-item"><a href="#" class="pure-menu-link">热搜</a></li>
+        </ul>
+    </div>
+
+    <div class="banner">
+        <div class="header-search">
+            <form class="pure-form index-search-form" onsubmit="return false;">
+                <input type="text" id="iptKeywords" class="pure-input index-search-input" />
+                <button type="submit" id="search" class="pure-button index-search-btn">搜索</button>
+            </form>
+        </div>
+        <ul class="index-keywords-box">
+            <% recommands.forEach(function(keyword){ %>
+                <li><a href="/search-<%=keyword %>.html"><%=keyword %></a></li>
+              <% }); %>
+        </ul>
+    </div>
+
+    <div class="l-content">
+        <div class="pricing-tables pure-g">
+            <% data.forEach(function(d){ %>
+                <div class="pure-u-1-2 pure-u-lg-4-24">
+                    <div class="pricing-table pricing-table-free">
+                        <div class="pricing-table-header">
+                            <img src="<%=d.thumb%>" alt="<%=d.title%>">
+                        </div>
+
+                        <ul class="pricing-table-list">
+                            <li> <%=d.title%> </li> <li>时长:<%=d.duration%> </li> <li>来源:<%=d.source%> </li>
+                        </ul>
+                        <a id="btngoplay" href="<%=d.url%>" target="_blank" class="button-choose pure-button">查看视频</a>
+                    </div>
+                </div>
+                <% }) %>
+        </div> <!-- end pricing-tables -->
+    </div> <!-- end l-content -->
+
+    <div class="footer l-box">
+        <p>
+            <a href="#">Try now</a> for 14 days. No credit card required. Header image courtesy of <a
+                href='http://unsplash.com/'>Unsplash</a>.
+        </p>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $('#search').click(function () {
+            console.log("/search-" + $('#iptKeywords').val() + ".html")
+            window.location = window.location.origin + "/search-" + $('#iptKeywords').val() + ".html"
+        })
+    </script>
+</body>
+
+</html>
