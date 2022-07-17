@@ -1,14 +1,22 @@
 const Axios = require('axios').default;
 const Cheerio = require('cheerio');
+const Base64=require("../utils").Base64;
+function encode(textToEncode) {
+    return btoa(textToEncode).replace(/\+/g, '~').replace(/\//g, '_').replace(/=/g, '-');
+}
+
+function decode(textToDecode) {
+    return atob(textToDecode.replace(/~/g, '+').replace(/_/g, '/').replace(/-/g, '='));
+}
 class SearchEnginee {
-    constructor(query,page) {
-        this.page = page||1;
+    constructor(query, page) {
+        this.page = page || 1;
         this.query = query
         this.cookies = null;
     }
 
     videoUrl(page) {
-        this.query=this.query.replace(/%20/g,"-")
+        this.query = this.query.replace(/%20/g, "-")
         return `https://www.thumbzilla.com/tags/${this.query}?page=${page || this.page}`;
     }
     gifUrl(page) {
@@ -75,10 +83,10 @@ class SearchEnginee {
                     const thumb = data.find('img').attr('data-defaultthumb') || '';
 
                     return {
-                        views:data.find('span.videos :nth-child(1)').text(),
-                        rating:data.find('span.videos :nth-child(2)').text(),
+                        views: data.find('span.videos :nth-child(1)').text(),
+                        rating: data.find('span.videos :nth-child(2)').text(),
                         title: data.find('span.info span.title').text().trim(),
-                        url: data.attr('href'),
+                        url: Base64.encode(`https://www.thumbzilla.com${data.attr('href')}`),
                         duration: data.find('.duration').text(),
                         thumb: thumb,
                         source: 'Pornhub'
@@ -116,15 +124,15 @@ class SearchEnginee {
             }).then((data) => {
                 try {
                     let body = data.data;
-                    let regex=/"playerObjList"\s:\s\[{\n\s+"playerDiv"\s:\s{([\s|\S]*?)}\n\s+}\]/g
+                    let regex = /"playerObjList"\s:\s\[{\n\s+"playerDiv"\s:\s{([\s|\S]*?)}\n\s+}\]/g
                     // let regex = /<script type="text\/javascript">(\W+var pageVar(\d+)\s=\s([\s\S]*?))<\/script>/g;
                     let realurl_regex = regex.exec(body);
-                    let match_obj=realurl_regex[1];
-                    match_obj=match_obj.replace(/\\t|\n/g,"")
+                    let match_obj = realurl_regex[1];
+                    match_obj = match_obj.replace(/\\t|\n/g, "")
                     let result = eval(`function __run(){return {${realurl_regex[1]}};} __run();`)
                     let mediaDefinitions = result.videoVars.mediaDefinitions;
                     let video = mediaDefinitions.filter((item) => {
-                        if (item.defaultQuality==true) return true;
+                        if (item.defaultQuality == true) return true;
                     })
                     resolve(video[0]['videoUrl']);
                 } catch (ex) {

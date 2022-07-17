@@ -39,7 +39,12 @@ p {
 .pure-menu-link {
     padding: 0.5em 0.7em;
 }
-
+a {
+    color: var(--ifm-link-color);
+    text-decoration: var(--ifm-link-decoration);
+    color: #3b8bba;
+    text-decoration: none;
+}
 /*
    * -- BANNER --
    * The top banner with the headings. By using a combination
@@ -48,11 +53,7 @@ p {
    */
 
 .banner {
-    background: transparent url("/public/img/bg.jpg") 0 0 no-repeat fixed;
     text-align: center;
-    background-size: cover;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/bg.jpg', sizingMethod='scale');
-
     height: 100px;
     width: 100%;
     margin-bottom: 3em;
@@ -187,15 +188,18 @@ p {
         font-size: 3em;
     }
 }
-
+.header-search{
+    width: 100%; display: table; height: 8rem; text-align: center; align-content: center;
+}
 .index-search-form {
     display: table-cell;
     vertical-align: middle;
+    
 }
 
 .index-search-input {
     width: 64%;
-    font-size: 3rem;
+    font-size: 2rem;
     line-height: 3rem;
     height: 3rem;
     display: inline-block !important;
@@ -208,11 +212,16 @@ p {
 }
 
 .index-keywords-box {
+    margin: 0;
     display: block;
+    padding: 0;
 }
 
 .index-keywords-box li {
-    padding: 1rem;
+    padding: 0.2rem;
     display: inline-block;
     margin: 0.3rem 1rem;
+    display: inline-block;
+    text-align: left;
+    float: left;
 }

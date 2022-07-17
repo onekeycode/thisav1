@@ -1,5 +1,6 @@
 const Axios = require('axios').default;
 const Cheerio = require('cheerio');
+const Base64=require("../utils").Base64;
 function basel64_decode(e) {
     var t = "АВСDЕFGHIJKLМNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,~", n = "", i = 0;
     /[^АВСЕМA-Za-z0-9\.\,\~]/g.exec(e) && this.log("error decoding url");
@@ -53,7 +54,7 @@ class SearchEnginee {
                         rating:video.rating,
                         views:video.video_viewed,
                         title: video.title ,
-                        url: `https://vjav.com/api/videofile.php?video_id=${video.video_id}&lifetime=8640000` ,
+                        url: Base64.encode(`https://vjav.com/api/videofile.php?video_id=${video.video_id}&lifetime=8640000`) ,
                         duration: video.duration ,
                         thumb: video.scr ,
                         gif: `https://vp1.vjav.com/c2/videos/${parseInt(video.video_id / 1000)}000/${video.video_id}/${video.video_id}_tr.mp4`,
@@ -80,7 +81,7 @@ class SearchEnginee {
             }).then((res) => {
                 let body=res.data;
                 let base64_url=body[0]['video_url'];
-                resolve(`https://vjav.com${basel64_decode(base64_url)}`);
+                resolve(`https://vjav.com${Base64.decode(base64_url)}`);
             }).catch((error) => {
                 console.log(error)
                 reject(error)

@@ -1,5 +1,6 @@
 const Axios = require('axios').default;
 const Cheerio = require('cheerio');
+const Base64=require("../utils").Base64;
 class SearchEnginee {
     constructor(query,page) {
         this.page = page||0;
@@ -25,7 +26,7 @@ class SearchEnginee {
                         rating:'1',
                         views:cache.find('.thumb-under .metadata .bg :nth-child(2)').contents().filter(function() { return this.nodeType == 3; }).eq(0).text().trim(),
                         title: title.text(),
-                        url: `https://xvideos.com${title.attr('href')}`,
+                        url: Base64.encode(`https://xvideos.com${title.attr('href')}`),
                         duration: cache.find('.duration').text(),
                         thumb: cache.find('.thumb img').data('src'),
                         source: 'Xvideos'
